@@ -1,0 +1,72 @@
+---
+title: "Summarizing and visualizing FARS data"
+author: "Nirmal Patel"
+date: "`r Sys.Date()`"
+output: rmarkdown::html_vignette
+vignette: >
+  %\VignetteIndexEntry{Summarizing and visualizing FARS data}
+  %\VignetteEngine{knitr::rmarkdown}
+  %\VignetteEncoding{UTF-8}
+---
+
+`farsdata` is collection of utility functions that summarize and visualize Fatality Analysis Reporting System (FARS) data. There are also helpers to import data. FARS data includes information of accidents that happened in United States. This package contains example data in `extdata` folder that users can access after installation using `system.file()` function.
+
+I will start usage of import functions and then show usage of summary and visualization functions.
+
+```{r helpers, echo = FALSE}
+add_prefix <- function(x) {
+  system.file("extdata", x, package = "farsdata")
+}
+```
+
+```{r}
+library(farsdata)
+```
+
+
+## Importing data
+
+`fars_read()` function reads in FARS data into R. As an argument, it takes path to data file, which can be compressed on uncompressed. This function will throw error of file is not found.
+
+```{r fars_read}
+dat_2013 <- fars_read(add_prefix("accident_2013.csv.bz2"))
+print(colnames(dat_2013))
+```
+
+2013 dataset has `r nrow(dat_2013)` rows. Data for 2014 and 2015 are also present in extdata subfolder of package installation directory.
+
+There is a helper function `make_filename()` that helps to construct names like `accident_2013.csv.bz2` given a numeric or character year.
+
+```{r make_filename}
+print(make_filename(2014))
+print(make_filename("2015"))
+```
+
+A third function, `fars_read_years()` usese above two functions to read in data of multiple years.
+
+```{r fars_read_years}
+yearwise_data <- fars_read_years(2013:2015, add_prefix)
+str(yearwise_data)
+```
+
+We can see that first item in list has data for 2013, second has data for 2014 and third has data for 2015. By default, `fars_read_years()` only selects MONTH and year columns.
+
+## Summarizing data
+
+We can use `fars_summarize_years()` to get total number of accidents within each month of given years. Let us get number of accidents in each month of years 2013, 2014 and 2015.
+
+```{r fars_summarize_years}
+summary_dat <- fars_summarize_years(2013:2015, add_prefix)
+knitr::kable(summary_dat)
+```
+
+## Visualizing data
+
+`fars_map_state()` lets us map accidents in a state in a given year. We can provide state number and year to get a plot of accidents.
+
+```{r, fig.show='hold'}
+fars_map_state(1, 2013, add_prefix)
+fars_map_state(1, 2014, add_prefix)
+```
+
+You can see accidents that happened in United States state number 1 (as encoded in FARS data) in years 2013 on left and 2014 on right.

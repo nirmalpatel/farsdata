@@ -1,0 +1,23 @@
+Package: farsdata
+Type: Package
+Title: Summarize and visualize FARS data 
+Version: 0.1.0
+Author: Nirmal Patel
+Maintainer: Nirmal Patel <message.nirmal@gmail.com>
+Description: This package contains functions to summarize and visualize Fatality Analysis Reporting System (FARS) data.
+    There are also functions to easily import FARS data.
+    This package is made as a response to assignment in Coursera course R Packages.
+License: GPL
+Encoding: UTF-8
+LazyData: true
+Imports: dplyr,
+  graphics,
+  magrittr,
+  maps,
+  readr,
+  tidyr
+Suggests: testthat,
+    knitr,
+    rmarkdown
+RoxygenNote: 6.0.1.9000
+VignetteBuilder: knitr
