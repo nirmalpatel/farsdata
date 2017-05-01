@@ -150,8 +150,6 @@ fars_summarize_years <- function(years, ...) {
 #' @export
 fars_map_state <- function(state.num, year, fname_transform = identity) {
 
-  require("maps")
-
   filename <- make_filename(year)
   filename <- fname_transform(filename)
   data <- fars_read(filename)
@@ -167,7 +165,7 @@ fars_map_state <- function(state.num, year, fname_transform = identity) {
   is.na(data.sub$LONGITUD) <- data.sub$LONGITUD > 900
   is.na(data.sub$LATITUDE) <- data.sub$LATITUDE > 90
   with(data.sub, {
-    map("state", ylim = range(LATITUDE, na.rm = TRUE),
+    maps::map("state", ylim = range(LATITUDE, na.rm = TRUE),
         xlim = range(LONGITUD, na.rm = TRUE))
     points(LONGITUD, LATITUDE, pch = 46)
   })
