@@ -3,7 +3,7 @@ Type: Package
 Title: Summarize and visualize FARS data 
 Version: 0.1.0
 Author: Nirmal Patel
-Maintainer: Nirmal Patel <message.nirmal@gmail.com>
+Maintainer: Nirmal Patel
 Description: This package contains functions to summarize and visualize Fatality Analysis Reporting System (FARS) data.
     There are also functions to easily import FARS data.
     This package is made as a response to assignment in Coursera course R Packages.
